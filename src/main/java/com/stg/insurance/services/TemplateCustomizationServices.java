@@ -18,4 +18,6 @@ public interface TemplateCustomizationServices {
 	
 	public void uploadCustomTemplateToS3 (JSONObject customTemplate) throws Exception;
 	
+	public String getTemplateByNameFromS3(String lineOfBusiness, String agencyName, String templateType, String templateName) throws Exception;
+	
 }

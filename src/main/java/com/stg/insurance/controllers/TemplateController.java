@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class TemplateController {
 	
+	
+	
 	@GetMapping ("/ediPlatform/getAllTemplates")
 	public List<String> getAllAgencies(@RequestParam ("agencyName") String agencyName){
 		List<String> templates = new ArrayList<>();

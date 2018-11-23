@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -58,6 +60,24 @@ public class TemplateCustomizationController {
 			}
 		}
 		
+	}
+	
+	@GetMapping("/ediPlatform/getTemplate/{lineOfBusiness}/{agencyName}/{templateType}/{templateName}")
+	public String getTemplateByName(@PathVariable ("lineOfBusiness") String lineOfBusiness, 
+			@PathVariable ("agencyName") String agencyName, 
+			@PathVariable ("templateType") String templateType, 
+			@PathVariable ("templateName") String templateName) {
+		
+		String template = null;
+		try {
+			template =  insuranceServices.getTemplateByNameFromS3(lineOfBusiness, agencyName, templateType, templateName);
+			System.out.println("Template = " + template);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return template;
 	}
 
 }

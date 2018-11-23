@@ -121,4 +121,28 @@ public class TemplateCustomizationServicesImpl implements TemplateCustomizationS
 		
 	}
 
+	@Override
+	public String getTemplateByNameFromS3(String lineOfBusiness, String agencyName, String templateType, String templateName) throws Exception {
+		
+		String template = null;
+		
+		if (lineOfBusiness != null &&agencyName != null && templateType != null && templateName != null  &&
+				!lineOfBusiness.isEmpty() && !agencyName.isEmpty()  && !templateType.isEmpty() && !templateName.isEmpty()) {
+			
+			StringBuffer path = new StringBuffer("insurance/");
+			path.append(agencyName).append("/").append(templateType).append("/").append(templateName);
+			
+			System.out.println("Path: " + path.toString());
+			
+			template = s3client.getObjectAsString(commonProperties.getBucketName(), path.toString());
+			
+			//System.out.println("Template = " + templateBody);
+			
+		} else {
+			throw new Exception("Invalid Input");
+		}
+		
+		return template;
+	}
+
 }
