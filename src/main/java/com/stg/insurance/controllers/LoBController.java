@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoBController {
 	
-	@GetMapping ("/editPlatform/getAllLoBs")
+	@GetMapping ("/ediPlatform/getAllLoBs")
 	public List<String> getAllLoBs(){
 		List<String> lineOfBusinessList = new ArrayList<>();
 		lineOfBusinessList.add("Insurance");
