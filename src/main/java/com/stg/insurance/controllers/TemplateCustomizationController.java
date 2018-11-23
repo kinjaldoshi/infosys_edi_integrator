@@ -62,7 +62,7 @@ public class TemplateCustomizationController {
 		
 	}
 	
-	@GetMapping("/ediPlatform/getTemplate/{lineOfBusiness}/{agencyName}/{templateType}/{templateName}")
+	@GetMapping("/getTemplate/{lineOfBusiness}/{agencyName}/{templateType}/{templateName}")
 	public String getTemplateByName(@PathVariable ("lineOfBusiness") String lineOfBusiness, 
 			@PathVariable ("agencyName") String agencyName, 
 			@PathVariable ("templateType") String templateType, 
