@@ -1,9 +1,16 @@
 package com.stg.insurance.services.impl;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +23,14 @@ import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.stg.insurance.properties.CommonProperties;
-import com.stg.insurance.services.TemplateCustomisationServices;
+import com.stg.insurance.services.TemplateCustomizationServices;
 
 /**
  * @author abhinavkumar.gupta
  *
  */
 @Service
-public class TemplateCustomisationServicesImpl implements TemplateCustomisationServices {
+public class TemplateCustomizationServicesImpl implements TemplateCustomizationServices {
 
 	@Autowired
 	private AmazonS3 s3client;
@@ -31,7 +38,7 @@ public class TemplateCustomisationServicesImpl implements TemplateCustomisationS
 	@Autowired
 	private CommonProperties commonProperties;
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(TemplateCustomisationServicesImpl.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(TemplateCustomizationServicesImpl.class);
 
 	@Override
 	public List<String> getFileName(String format) throws FileNotFoundException {
@@ -80,6 +87,38 @@ public class TemplateCustomisationServicesImpl implements TemplateCustomisationS
 		}
 
 		return fileNamesWithPath;
+	}
+	
+	@Override
+	public void uploadCustomTemplateToS3(JSONObject customTemplate) throws Exception {
+		
+		if (customTemplate != null) {
+			System.out.println("JSON: " + customTemplate.toString());
+			if (customTemplate.has("templateName")) {
+				try {
+					Path path = Files.createTempFile(customTemplate.getString("templateName"),  ".json");
+					System.out.println("File Path = " + path.toString());
+					File file  = path.toFile();
+					FileUtils.writeByteArrayToFile(file, customTemplate.toString().getBytes());
+					String s3Path = commonProperties.getBucketName() + commonProperties.getPrefix();
+					System.out.println("S3 Path = " + s3Path);
+					s3client.putObject(commonProperties.getBucketName(), commonProperties.getAl3Prefix() + customTemplate.getString("templateName") + ".json", 
+							new File(path.toString()));
+					
+				} catch (JSONException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				throw new Exception("Custom Template received from Template Customizer does not contain template name");
+			}
+		}else {
+			throw new Exception("Custom Template received from Template Customizer is null");
+			
+		}
+		
+		
+		
 	}
 
 }

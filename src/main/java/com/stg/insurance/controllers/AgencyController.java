@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,10 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class AgencyController {
 	
 	@GetMapping ("/ediPlatform/getAllAgencies")
-	public List<String> getAllAgencies(){
+	public List<String> getAllAgencies(@RequestParam ("lineOfBusiness") String lineOfBusiness){
+		System.out.println("Line of Business: " + lineOfBusiness);
 		List<String> agencies = new ArrayList<>();
-		agencies.add("Accord");
-		agencies.add("Hipaa");
+		if (lineOfBusiness != null && !lineOfBusiness.isEmpty()) {
+			if (lineOfBusiness.equals("Vehicle Insurance")) {
+				agencies.add("Accord");
+				agencies.add("ASC");
+			}
+			if (lineOfBusiness.equals("Health Insurance")) {
+				agencies.add("Hipaa");
+				agencies.add("ASC");
+			}
+		}
 		return agencies;
 	}
 

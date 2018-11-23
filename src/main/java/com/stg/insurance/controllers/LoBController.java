@@ -14,8 +14,8 @@ public class LoBController {
 	@GetMapping ("/ediPlatform/getAllLoBs")
 	public List<String> getAllLoBs(){
 		List<String> lineOfBusinessList = new ArrayList<>();
-		lineOfBusinessList.add("Insurance");
+		lineOfBusinessList.add("Vehicle Insurance");
+		lineOfBusinessList.add("Health Insurance");
 		return lineOfBusinessList;
 	}
-
 }

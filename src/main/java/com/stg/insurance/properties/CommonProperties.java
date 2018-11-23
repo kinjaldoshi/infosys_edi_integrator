@@ -29,6 +29,9 @@ public class CommonProperties {
 
 	@Value("${s3.region}")
 	private String region;
+	
+	@Value ("${s3.al3.prefix}")
+	private String al3Prefix;
 
 	/**
 	 * @return the bucketName
@@ -103,6 +106,20 @@ public class CommonProperties {
 	 */
 	public void setRegion(String region) {
 		this.region = region;
+	}
+	
+	/**
+	 * @return the al3Prefix
+	 */
+	public String getAl3Prefix() {
+		return al3Prefix;
+	}
+
+	/**
+	 * @param al3Prefix the al3Prefix to set
+	 */
+	public void setAl3Prefix(String al3Prefix) {
+		this.al3Prefix = al3Prefix;
 	}
 
 }
