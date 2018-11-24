@@ -25,7 +25,7 @@ public class AgencyController {
 		List<String> agencies = new ArrayList<>();
 		if (lineOfBusiness != null && !lineOfBusiness.isEmpty()) {
 			if (lineOfBusiness.equals("Vehicle Insurance")) {
-				agencies.add("Accord");
+				agencies.add("Acord");
 				agencies.add("ASC");
 			}
 			if (lineOfBusiness.equals("Health Insurance")) {
