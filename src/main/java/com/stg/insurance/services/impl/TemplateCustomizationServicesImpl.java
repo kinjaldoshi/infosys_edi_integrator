@@ -22,7 +22,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.stg.insurance.properties.CommonProperties;
+import com.stg.insurance.properties.S3Properties;
 import com.stg.insurance.services.TemplateCustomizationServices;
 
 /**
@@ -36,14 +36,14 @@ public class TemplateCustomizationServicesImpl implements TemplateCustomizationS
 	private AmazonS3 s3client;
 
 	@Autowired
-	private CommonProperties commonProperties;
+	private S3Properties s3Properties;
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TemplateCustomizationServicesImpl.class);
 
 	@Override
 	public List<String> getFileName(String format) throws FileNotFoundException {
 
-		List<String> files = getFileNamesFromS3(commonProperties.getPrefix() + "/" + format);
+		List<String> files = getFileNamesFromS3(s3Properties.getPrefix() + "/" + format);
 		if (files != null && !files.isEmpty()) {
 			return files;
 		}
@@ -56,10 +56,10 @@ public class TemplateCustomizationServicesImpl implements TemplateCustomizationS
 	private List<String> getFileNamesFromS3(String prefix) {
 		List<String> fileNamesWithPath = new ArrayList<String>();
 		try {
-			LOGGER.info("bucket name " + commonProperties.getBucketName());
+			LOGGER.info("bucket name " + s3Properties.getBucketName());
 
 			/* Request for all file paths in the sub path log-stgf-api/dflt */
-			ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(commonProperties.getBucketName())
+			ListObjectsV2Request request = new ListObjectsV2Request().withBucketName(s3Properties.getBucketName())
 					.withPrefix(prefix);
 
 			/* Request list of sub paths with absolute path detailed */
@@ -100,9 +100,9 @@ public class TemplateCustomizationServicesImpl implements TemplateCustomizationS
 					System.out.println("File Path = " + path.toString());
 					File file  = path.toFile();
 					FileUtils.writeByteArrayToFile(file, customTemplate.toString().getBytes());
-					String s3Path = commonProperties.getBucketName() + commonProperties.getPrefix();
+					String s3Path = s3Properties.getBucketName() + s3Properties.getPrefix();
 					System.out.println("S3 Path = " + s3Path);
-					s3client.putObject(commonProperties.getBucketName(), commonProperties.getAl3Prefix() + customTemplate.getString("templateName") + ".json", 
+					s3client.putObject(s3Properties.getBucketName(), s3Properties.getAl3Prefix() + customTemplate.getString("templateName") + ".json", 
 							new File(path.toString()));
 					
 				} catch (JSONException | IOException e) {
@@ -134,7 +134,7 @@ public class TemplateCustomizationServicesImpl implements TemplateCustomizationS
 			
 			System.out.println("Path: " + path.toString());
 			
-			template = s3client.getObjectAsString(commonProperties.getBucketName(), path.toString());
+			template = s3client.getObjectAsString(s3Properties.getBucketName(), path.toString());
 			
 			//System.out.println("Template = " + templateBody);
 			

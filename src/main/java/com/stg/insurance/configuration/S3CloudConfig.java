@@ -12,7 +12,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.stg.insurance.properties.CommonProperties;
+import com.stg.insurance.properties.S3Properties;
 
 /**
  * @author kinjal.doshi
@@ -22,15 +22,15 @@ import com.stg.insurance.properties.CommonProperties;
 public class S3CloudConfig {
 	
 	@Autowired
-	CommonProperties commonProperties;
+	S3Properties s3Properties;
 
 	@Bean
 	public AmazonS3 s3client() {
 
-		BasicAWSCredentials awsCreds = new BasicAWSCredentials(commonProperties.getAccessKey(), commonProperties.getSecretKey());
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials(s3Properties.getAccessKey(), s3Properties.getSecretKey());
 
 		AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-				.withRegion(Regions.fromName(commonProperties.getRegion()))
+				.withRegion(Regions.fromName(s3Properties.getRegion()))
 				.withCredentials(new AWSStaticCredentialsProvider(awsCreds))
 				.build();
 
