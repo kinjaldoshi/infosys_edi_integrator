@@ -30,9 +30,10 @@ public class ReportingController {
 		
 		List<String> reportingGroups = new ArrayList<>();
 		if  (templateName != null && !templateName.isEmpty()) {
-			reportingGroups = insuranceProperties.getAl3ReportingGroups();
+			if (templateName.equalsIgnoreCase("AL3")) {
+				reportingGroups = insuranceProperties.getAl3ReportingGroups();
+			}
 		}
-		return reportingGroups;
-		
+		return reportingGroups;	
 	}
 }
