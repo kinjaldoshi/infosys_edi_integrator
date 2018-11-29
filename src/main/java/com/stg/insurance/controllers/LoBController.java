@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stg.insurance.properties.InsuranceProperties;
+import com.stg.insurance.services.S3CredentialsAccessService;
 
 @RestController
 @CrossOrigin
@@ -15,6 +16,9 @@ public class LoBController {
 	
 	@Autowired
 	InsuranceProperties insuranceProperties;
+	
+	@Autowired 
+	private S3CredentialsAccessService s3CredentialClient;
 	
 	@GetMapping ("/ediPlatform/getAllLoBs")
 	public List<String> getAllLoBs(){

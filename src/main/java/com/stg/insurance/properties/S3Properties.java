@@ -12,7 +12,6 @@ import org.springframework.context.annotation.PropertySource;
  *
  */
 @Configuration
-@PropertySource("classpath:application.properties")
 public class S3Properties {
 
 	@Value("${s3.bucket_name}")
