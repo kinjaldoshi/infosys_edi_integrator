@@ -20,4 +20,6 @@ public interface TemplateCustomizationServices {
 	
 	public String getTemplateByNameFromS3(String lineOfBusiness, String agencyName, String templateType, String templateName) throws Exception;
 	
+	public String getTemplateNameAndDescriptionFromS3();
+	
 }

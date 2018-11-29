@@ -79,5 +79,10 @@ public class TemplateCustomizationController {
 
 		return template;
 	}
+	
+	@GetMapping("/getTemplateNameAndDescription")
+	public void getTemplateNameAndDescriptionFromS3() {
+		insuranceServices.getTemplateNameAndDescriptionFromS3();
+	}
 
 }

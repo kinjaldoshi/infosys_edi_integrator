@@ -31,6 +31,10 @@ public class InsuranceProperties {
 	
 	@Value("${insurance.other-templates-list}")
 	private String otherTemplatesList;
+	
+	@Value("${insurance.al3-reporting-groups}")
+	private String al3ReportingGroups;
+
 
 	/**
 	 * @return the lineOfBusinessList
@@ -101,4 +105,20 @@ public class InsuranceProperties {
 	public void setOtherTemplatesList(String otherTemplatesList) {
 		this.otherTemplatesList = otherTemplatesList;
 	}
+
+	/**
+	 * @return the al3ReportingGroups
+	 */
+	public List<String> getAl3ReportingGroups() {
+		return Arrays.asList(al3ReportingGroups.split(","));
+	}
+
+	/**
+	 * @param al3ReportingGroups the al3ReportingGroups to set
+	 */
+	public void setAl3ReportingGroups(String al3ReportingGroups) {
+		this.al3ReportingGroups = al3ReportingGroups;
+	}
+	
+	
 }
